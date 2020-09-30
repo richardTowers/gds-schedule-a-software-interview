@@ -1,7 +1,7 @@
 gds-schedule-a-software-interview
 =================================
 
-This is a small application to help find panelists for software developer
+This is a small application to help put together panels for software developer
 interviews.
 
 It's important that our panels are diverse, so that we are as unbiased as

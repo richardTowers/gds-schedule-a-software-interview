@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Add candidates and panelists
+{% endblock %}
+
+{% block content %}
+<a href="/" class="govuk-back-link">Back</a>
+
+<h1 class="govuk-heading-xl">Add candidates and panelists</h1>
+
+{% with all_messages = get_flashed_messages() %}
+{% with candidates_messages = get_flashed_messages(category_filter=["candidates"]) %}
+{% with panelists_messages = get_flashed_messages(category_filter=["panelists"]) %}
+{% if all_messages %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="govuk-error-summary">
+        <h2 class="govuk-error-summary__title" id="error-summary-title">
+          There is a problem
+        </h2>
+        <div class="govuk-error-summary__body">
+          <ul class="govuk-list govuk-error-summary__list">
+            {% for message in candidates_messages %}
+            <li>
+              <a href="#candidates-error">{{message}}</a>
+            </li>
+            {% endfor %}
+            {% for message in panelists_messages %}
+            <li>
+              <a href="#panelists-error">{{message}}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+</div>
+{% endif %}
+
+<p class="govuk-body">
+To keep things simple and secure, this application does not store any data.
+<p>
+
+<p class="govuk-body">
+You should make a copy of
+<a href="https://docs.google.com/spreadsheets/d/1M4ZLKOnYQPKesSE-W_96jSsIBWBsFdN0vXtYm4WuQBM/edit#gid=547748653">this Google Sheet</a>,
+fill in details of their candidates and prospective panelists, then paste that
+data into the form below. No data you enter will be stored by the application.
+</p>
+
+<div class="govuk-grid-row">
+    <form class="govuk-grid-column-two-thirds" method="post" action="/results">
+      <div class="govuk-form-group {% if candidates_messages %}govuk-form-group--error{% endif %}">
+        <h1 class="govuk-label-wrapper govuk-heading-xl"><label class="govuk-label govuk-label--l" for="candidates">
+            Candidates
+          </label>
+        </h1>
+        <div id="candidates-hint" class="govuk-hint">
+          Paste these from a Google Sheet. Your data should have two columns:
+          <ol>
+            <li>Candidate</li>
+            <li>Team</li>
+          </ol>
+          Include the column headings.
+        </div>
+        {% for message in candidates_messages %}
+        <div id="candidates-error" class="govuk-error-message">
+          <span class="govuk-visually-hidden">Error:</span> {{message}}
+        </div>
+        {% endfor %}
+        <textarea class="govuk-textarea" id="candidates" name="candidates" rows="5" aria-describedby="candidates-hint"></textarea>
+      </div>
+      <div class="govuk-form-group {% if panelists_messages %}govuk-form-group--error{% endif %}">
+        <h1 class="govuk-label-wrapper govuk-heading-xl"><label class="govuk-label govuk-label--l" for="panelists">
+            Panelists
+          </label>
+        </h1>
+        <div id="panelists-hint" class="govuk-hint">
+          Paste these from a Google Sheet. Your data should have nine columns:
+          <ol>
+            <li>Panelist</li>
+            <li>Can chair panels?</li>
+            <li>Is male?</li>
+            <li>Is BAME?</li>
+            <li>Team</li>
+            <li>Has a software engineering background?</li>
+            <li>Community</li>
+            <li>Max Panels</li>
+            <li>Min Panels</li>
+          </ol>
+          Include the column headings.
+        </div>
+        {% for message in panelists_messages %}
+        <div id="panelists-error" class="govuk-error-message">
+          <span class="govuk-visually-hidden">Error:</span> {{message}}
+        </div>
+        {% endfor %}
+        <textarea class="govuk-textarea" id="panelists" name="panelists" rows="5" aria-describedby="panelists-hint"></textarea>
+      </div>
+      <div class="govuk-form-group">
+        <button class="govuk-button" data-module="govuk-button">
+          Continue
+        </button>
+      </div>
+    </form>
+</div>
+{% endwith %}
+{% endwith %}
+{% endwith %}
+
+
+{% endblock %}
+

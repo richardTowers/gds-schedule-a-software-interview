@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Suggested panels
+{% endblock %}
+
+{% block content %}
+<a href="/add-candidates-and-panelists" class="govuk-back-link">Back</a>
+
+<h1 class="govuk-heading-xl">Results</h1>
+<h2 class="govuk-heading-m">Suggested panels</h2>
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Candidate</th>
+      <th scope="col" class="govuk-table__header">Chair</th>
+      <th scope="col" class="govuk-table__header">Panelist 1</th>
+      <th scope="col" class="govuk-table__header">Panelist 2</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    {% for panel in panels %}
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">{{panel.candidate}}</td>
+      <td class="govuk-table__cell"><strong>{{panel.chair}}</strong></td>
+      <td class="govuk-table__cell">{{panel.panelists[0]}}</td>
+      <td class="govuk-table__cell">{{panel.panelists[1]}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<h2 class="govuk-heading-m">Panel counts</h2>
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Panelist</th>
+      <th scope="col" class="govuk-table__header">Count</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    {% for panelist in panel_counts %}
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">{{panelist[0]}}</td>
+      <td class="govuk-table__cell">{{panelist[1]}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<div class="govuk-grid-row">
+  <form method=post class="govuk-grid-column-two-thirds">
+    <!-- This is here to let people change the rules, if they want to -->
+    <input type="hidden" name="candidates" value="{{raw_candidates}}">
+    <input type="hidden" name="panelists" value="{{raw_panelists}}">
+  </form>
+</div>
+
+{% endblock %}
+
