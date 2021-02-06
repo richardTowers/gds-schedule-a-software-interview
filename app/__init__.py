@@ -51,6 +51,10 @@ def create_app():
             return redirect(url_for('add_candidates_and_panelists'))
 
         panels = panel_generator.generate_panel(candidates, panelists)
+        if panels is None:
+            flash('Could not find a set of panels which met the constraints. Consider allowing some panelists to sit on more interview panels.', 'solver')
+            return redirect(url_for('add_candidates_and_panelists'))
+
         panel_counts = panel_counter.count_panels(panels)
 
         return render_template(

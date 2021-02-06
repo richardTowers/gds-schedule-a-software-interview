@@ -12,6 +12,7 @@ Add candidates and panelists
 {% with all_messages = get_flashed_messages() %}
 {% with candidates_messages = get_flashed_messages(category_filter=["candidates"]) %}
 {% with panelists_messages = get_flashed_messages(category_filter=["panelists"]) %}
+{% with solver_messages = get_flashed_messages(category_filter=["solver"]) %}
 {% if all_messages %}
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
@@ -29,6 +30,11 @@ Add candidates and panelists
             {% for message in panelists_messages %}
             <li>
               <a href="#panelists-error">{{message}}</a>
+            </li>
+            {% endfor %}
+            {% for message in solver_messages %}
+            <li>
+              {{message}}
             </li>
             {% endfor %}
           </ul>
@@ -105,6 +111,7 @@ data into the form below. No data you enter will be stored by the application.
       </div>
     </form>
 </div>
+{% endwith %}
 {% endwith %}
 {% endwith %}
 {% endwith %}
