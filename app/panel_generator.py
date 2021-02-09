@@ -85,8 +85,18 @@ def generate_panel(candidates, panelists, preferred_teams):
             <= panelist.max_panels
         )
 
+    objectives = [
+        # Maximize the number of panelists from the Software Engineering community
+        sum(
+            variables[candidate, panelist]
+            for candidate in candidates
+            for panelist in panelists
+            if panelist.community == "Software Engineering"
+        )
+    ]
     if preferred_teams:
-        model.Maximize(
+        objectives.append(
+            # Maximize the number of panelists from preferred teams
             sum(
                 variables[candidate, panelist]
                 for candidate in candidates
@@ -94,6 +104,8 @@ def generate_panel(candidates, panelists, preferred_teams):
                 if panelist.team in preferred_teams
             )
         )
+
+    model.Maximize(sum(objectives))
 
     solver = cp_model.CpSolver()
     solver.parameters.max_time_in_seconds = 5.0
