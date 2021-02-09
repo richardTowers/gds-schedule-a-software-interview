@@ -27,6 +27,7 @@ def create_app():
         error = False
         raw_candidates = request.form['candidates']
         raw_panelists = request.form['panelists']
+        raw_preferred_teams = request.form['preferred-teams']
         if raw_candidates == '':
             error = True
             flash('Enter a list of candidates', 'candidates')
@@ -50,7 +51,9 @@ def create_app():
         if error:
             return redirect(url_for('add_candidates_and_panelists'))
 
-        panels = panel_generator.generate_panel(candidates, panelists)
+        preferred_teams = raw_preferred_teams.split(",") if raw_preferred_teams else None
+
+        panels = panel_generator.generate_panel(candidates, panelists, preferred_teams)
         if panels is None:
             flash('Could not find a set of panels which met the constraints. Consider allowing some panelists to sit on more interview panels.', 'solver')
             return redirect(url_for('add_candidates_and_panelists'))

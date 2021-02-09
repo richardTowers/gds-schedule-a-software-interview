@@ -4,7 +4,7 @@ from collections import namedtuple
 class Panel:
     pass
 
-def generate_panel(candidates, panelists):
+def generate_panel(candidates, panelists, preferred_teams):
     model = cp_model.CpModel()
     variables = {}
     for candidate in candidates:
@@ -85,7 +85,18 @@ def generate_panel(candidates, panelists):
             <= panelist.max_panels
         )
 
+    if preferred_teams:
+        model.Maximize(
+            sum(
+                variables[candidate, panelist]
+                for candidate in candidates
+                for panelist in panelists
+                if panelist.team in preferred_teams
+            )
+        )
+
     solver = cp_model.CpSolver()
+    solver.parameters.max_time_in_seconds = 5.0
     status = solver.Solve(model)
 
     if status in [cp_model.FEASIBLE, cp_model.OPTIMAL]:
@@ -97,9 +108,9 @@ def generate_panel(candidates, panelists):
             for panelist in panelists:
                 if solver.BooleanValue(variables[candidate, panelist]):
                     if panelist.can_chair_panels:
-                        panel.chair = panelist.name
+                        panel.chair = panelist
                     else:
-                        panel.panelists.append(panelist.name)
+                        panel.panelists.append(panelist)
             panels.append(panel)
         return panels
     else:

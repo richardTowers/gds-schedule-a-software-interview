@@ -22,9 +22,9 @@ Suggested panels
     {% for panel in panels %}
     <tr class="govuk-table__row">
       <td class="govuk-table__cell">{{panel.candidate}}</td>
-      <td class="govuk-table__cell"><strong>{{panel.chair}}</strong></td>
-      <td class="govuk-table__cell">{{panel.panelists[0]}}</td>
-      <td class="govuk-table__cell">{{panel.panelists[1]}}</td>
+      <td class="govuk-table__cell"><strong>{{panel.chair.name}}</strong></td>
+      <td class="govuk-table__cell">{{panel.panelists[0].name}}</td>
+      <td class="govuk-table__cell">{{panel.panelists[1].name}}</td>
     </tr>
     {% endfor %}
   </tbody>
@@ -34,6 +34,7 @@ Suggested panels
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
       <th scope="col" class="govuk-table__header">Panelist</th>
+      <th scope="col" class="govuk-table__header">Team</th>
       <th scope="col" class="govuk-table__header">Count</th>
     </tr>
   </thead>
@@ -42,6 +43,7 @@ Suggested panels
     <tr class="govuk-table__row">
       <td class="govuk-table__cell">{{panelist[0]}}</td>
       <td class="govuk-table__cell">{{panelist[1]}}</td>
+      <td class="govuk-table__cell">{{panelist[2]}}</td>
     </tr>
     {% endfor %}
   </tbody>

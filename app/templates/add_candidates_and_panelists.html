@@ -58,10 +58,10 @@ data into the form below. No data you enter will be stored by the application.
 <div class="govuk-grid-row">
     <form class="govuk-grid-column-two-thirds" method="post" action="/results">
       <div class="govuk-form-group {% if candidates_messages %}govuk-form-group--error{% endif %}">
-        <h1 class="govuk-label-wrapper govuk-heading-xl"><label class="govuk-label govuk-label--l" for="candidates">
+        <h2 class="govuk-label-wrapper govuk-heading-l"><label class="govuk-label govuk-label--l" for="candidates">
             Candidates
           </label>
-        </h1>
+        </h2>
         <div id="candidates-hint" class="govuk-hint">
           Paste these from a Google Sheet. Your data should have two columns:
           <ol>
@@ -77,11 +77,12 @@ data into the form below. No data you enter will be stored by the application.
         {% endfor %}
         <textarea class="govuk-textarea" id="candidates" name="candidates" rows="5" aria-describedby="candidates-hint"></textarea>
       </div>
+
       <div class="govuk-form-group {% if panelists_messages %}govuk-form-group--error{% endif %}">
-        <h1 class="govuk-label-wrapper govuk-heading-xl"><label class="govuk-label govuk-label--l" for="panelists">
+        <h2 class="govuk-label-wrapper govuk-heading-l"><label class="govuk-label govuk-label--l" for="panelists">
             Panelists
           </label>
-        </h1>
+        </h2>
         <div id="panelists-hint" class="govuk-hint">
           Paste these from a Google Sheet. Your data should have nine columns:
           <ol>
@@ -103,6 +104,24 @@ data into the form below. No data you enter will be stored by the application.
         </div>
         {% endfor %}
         <textarea class="govuk-textarea" id="panelists" name="panelists" rows="5" aria-describedby="panelists-hint"></textarea>
+      </div>
+      <div class="govuk-form-group">
+        <h2 class="govuk-label-wrapper govuk-heading-l"><label class="govuk-label govuk-label--l" for="preferred-teams">
+            Preferred Teams (optional)
+          </label>
+        </h2>
+        <div id="preferred-teams-hint" class="govuk-hint">
+          <p>
+          If you'd prefer that panelists come from particular teams, specify
+          them here (separated by commas).
+          </p>
+          <p>
+          For example, if you were running a campaign to hire developers for
+          GOV.UK and Verify, specifying "GOV.UK,Verify" would tell the tool to
+          maximise the panelists chosen from those teams.
+          </p>
+        </div>
+        <textarea class="govuk-textarea" id="preferred-teams" name="preferred-teams" rows="5" aria-describedby="preferred-teams"></textarea>
       </div>
       <div class="govuk-form-group">
         <button class="govuk-button" data-module="govuk-button">
